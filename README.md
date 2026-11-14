@@ -53,3 +53,10 @@ no time-zone handling, and no pagination. These are covered as future work in th
 Sunday Obayan (E048864), Lucky Olaniyan (E050846), James Akinnifesi (E050851),
 Paul Oghenetega Francis (E050853, group leader), Temitayo Awosanmi (E050855).
 Supervisor: Prof. Oladejo.
+
+## Team (CSC 476, Group 4, Supervisor: Prof. Oladejo)
+- Francis, Paul Oghenetega (Team Leader), E050853
+- Obayan, Sunday, E048864
+- Olaniyan, Lucky, E050846
+- Akinnifesi, James, E050851
+- Awosanmi, Temitayo Stephen, E050855
