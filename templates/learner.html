@@ -1,0 +1,25 @@
+{% extends "base.html" %}{% block body %}
+<h1>My learning</h1>
+<section class="stats">
+  <div><b>{{ stats.done }}</b><span>sessions completed</span></div>
+  <div><b>{{ stats.upcoming }}</b><span>upcoming</span></div>
+  <div><b>{{ stats.asked }}</b><span>questions asked</span></div>
+  <div><b>{{ stats.answered }}</b><span>answered</span></div>
+</section>
+<h2>My courses</h2>
+<p>{% for c in courses %}<a href="{{ url_for('forum', course_id=c.id) }}">{{ c.code }} Q&amp;A</a>{% if not loop.last %} | {% endif %}{% endfor %}</p>
+<h2>My sessions</h2>
+<table><tr><th>Course</th><th>Tutor</th><th>When</th><th>Mode</th><th>Status</th><th></th></tr>
+{% for s in mine %}<tr><td>{{ s.code }}</td><td>{{ s.tutor }}</td><td>{{ s.start_at }}</td><td>{{ s.mode }}</td><td>{{ s.status }}</td>
+<td>{% if s.status == 'booked' %}<form method="post" action="{{ url_for('cancel', slot_id=s.id) }}"><input type="hidden" name="csrf" value="{{ csrf }}"><button>Cancel</button></form>{% endif %}</td></tr>
+{% else %}<tr><td colspan="6">No sessions yet.</td></tr>{% endfor %}</table>
+<h2>Available tutoring slots</h2>
+<form method="get" class="filter">Course
+  <select name="course" onchange="this.form.submit()"><option value="">All</option>
+  {% for c in courses %}<option value="{{ c.id }}" {{ 'selected' if selected == c.id }}>{{ c.code }}</option>{% endfor %}</select>
+  <noscript><button>Filter</button></noscript></form>
+<table><tr><th>Course</th><th>Tutor</th><th>When</th><th>Mode</th><th></th></tr>
+{% for s in open_slots %}<tr><td>{{ s.code }}</td><td>{{ s.tutor }}</td><td>{{ s.start_at }}</td><td>{{ s.mode }}</td>
+<td><form method="post" action="{{ url_for('book', slot_id=s.id) }}"><input type="hidden" name="csrf" value="{{ csrf }}"><button>Book</button></form></td></tr>
+{% else %}<tr><td colspan="5">No open slots right now.</td></tr>{% endfor %}</table>
+{% endblock %}

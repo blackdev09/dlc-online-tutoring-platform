@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block body %}
+<h1>Sign in</h1>
+<form method="post" class="card">
+  <input type="hidden" name="csrf" value="{{ csrf }}">
+  <label>Email <input name="email" type="email" required></label>
+  <label>Password <input name="password" type="password" required></label>
+  <button>Sign in</button>
+</form>
+<p class="muted">Demo accounts: learner amaka@dlc.test, tutor bello@dlc.test, admin admin@dlc.test (password: password123)</p>
+{% endblock %}

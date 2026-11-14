@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% block body %}
+<h1>Engagement report</h1>
+<section class="stats">
+  <div><b>{{ totals.learners }}</b><span>learners</span></div><div><b>{{ totals.tutors }}</b><span>tutors</span></div>
+  <div><b>{{ totals.booked }}</b><span>sessions booked</span></div><div><b>{{ totals.open }}</b><span>open slots</span></div>
+  <div><b>{{ totals.questions }}</b><span>questions</span></div><div><b>{{ totals.unanswered }}</b><span>unanswered</span></div>
+  <div><b>{{ totals.avg_response if totals.avg_response is not none else '-' }}</b><span>avg. response (min)</span></div>
+</section>
+<h2>Activity by course</h2>
+<table><tr><th>Course</th><th>Title</th><th>Sessions</th><th>Questions</th></tr>
+{% for c in per_course %}<tr><td>{{ c.code }}</td><td>{{ c.title }}</td><td>{{ c.sessions }}</td><td>{{ c.questions }}</td></tr>{% endfor %}</table>
+<h2>Learners with no activity in {{ days }} days</h2>
+<table><tr><th>Learner</th><th>Last activity</th></tr>
+{% for r in at_risk %}<tr><td>{{ r.name }}</td><td>{{ r.last_active or 'never' }}</td></tr>{% else %}<tr><td colspan="2">None.</td></tr>{% endfor %}</table>
+{% endblock %}

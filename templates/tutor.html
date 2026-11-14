@@ -1,0 +1,19 @@
+{% extends "base.html" %}{% block body %}
+<h1>Tutor dashboard</h1>
+<h2>Add availability</h2>
+<form method="post" action="{{ url_for('add_slot') }}" class="card row">
+  <input type="hidden" name="csrf" value="{{ csrf }}">
+  <label>Course <select name="course_id">{% for c in courses %}<option value="{{ c.id }}">{{ c.code }}</option>{% endfor %}</select></label>
+  <label>Date and time <input name="start_at" type="datetime-local" required></label>
+  <label>Mode <select name="mode"><option>video</option><option>audio</option><option>text</option></select></label>
+  <button>Add slot</button>
+</form>
+<h2>Questions waiting for an answer ({{ waiting|length }})</h2>
+<ul>{% for q in waiting %}<li><a href="{{ url_for('forum', course_id=q.course_id) }}">{{ q.code }}</a> - {{ q.learner }}: {{ q.body[:90] }} <small>({{ q.created_at }})</small></li>
+{% else %}<li>All caught up.</li>{% endfor %}</ul>
+<h2>My slots</h2>
+<table><tr><th>Course</th><th>When</th><th>Mode</th><th>Learner</th><th>Status</th><th></th></tr>
+{% for s in slots %}<tr><td>{{ s.code }}</td><td>{{ s.start_at }}</td><td>{{ s.mode }}</td><td>{{ s.learner or '-' }}</td><td>{{ s.status }}</td>
+<td>{% if s.status == 'booked' %}<form method="post" action="{{ url_for('complete', slot_id=s.id) }}"><input type="hidden" name="csrf" value="{{ csrf }}"><button>Mark done</button></form>{% endif %}</td></tr>
+{% endfor %}</table>
+{% endblock %}

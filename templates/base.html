@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}DLC Tutoring{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='lite.css' if lite else 'style.css') }}">
+</head><body>
+<header>
+  <strong>DLC Online Tutoring</strong>
+  {% if user %}<nav>
+    <span>{{ user.name }} ({{ user.role }})</span>
+    <form method="post" action="{{ url_for('lite_mode', state='off' if lite else 'on') }}" class="inline">
+      <input type="hidden" name="csrf" value="{{ csrf }}"><button>{{ 'Standard view' if lite else 'Low-bandwidth view' }}</button></form>
+    <form method="post" action="{{ url_for('logout') }}" class="inline">
+      <input type="hidden" name="csrf" value="{{ csrf }}"><button>Log out</button></form>
+  </nav>{% endif %}
+</header>
+<main>
+{% with msgs = get_flashed_messages() %}{% for m in msgs %}<p class="flash">{{ m }}</p>{% endfor %}{% endwith %}
+{% block body %}{% endblock %}
+</main></body></html>
